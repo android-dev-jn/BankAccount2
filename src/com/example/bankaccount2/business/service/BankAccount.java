@@ -1,5 +1,6 @@
 package com.example.bankaccount2.business.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.util.Log;
@@ -48,6 +49,11 @@ public class BankAccount {
 		bankAccountDTO.setBalance(bankAccountDTO.getBalance() - amount);
 		bankAccountDAO.save(bankAccountDTO);
 		
+	}
+
+	public static ArrayList<TransactionDTO> getTransactionOccurred(String accountNumber) {
+		ArrayList<TransactionDTO> listTransactions = transactionDAO.getTransactionOccurred(accountNumber);
+		return listTransactions;
 	}
 
 }
