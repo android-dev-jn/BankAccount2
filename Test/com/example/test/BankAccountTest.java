@@ -146,5 +146,17 @@ public class BankAccountTest extends TestCase {
 				accountNubmerCaptor.capture());
 		assertEquals(accountNumber, accountNubmerCaptor.getValue());
 	}
+	
+	// 8
+	public void testGestListTransactionsInPeriodOfTime() {
+		String accountNumber = "1234567890";
+		long startTime = 1000, stopTime = 2000;
+
+		BankAccount.getTransactionsInPeriodOfTime(accountNumber, startTime, stopTime);
+		ArgumentCaptor<String> accountNubmerCaptor = ArgumentCaptor
+				.forClass(String.class);
+		verify(mockTransactionDAO, times(1)).getTransactions(accountNumber,
+				startTime, stopTime);
+	}
 
 }
