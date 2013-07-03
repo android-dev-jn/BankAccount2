@@ -158,5 +158,14 @@ public class BankAccountTest extends TestCase {
 		verify(mockTransactionDAO, times(1)).getTransactionsInPeriodOfTime(accountNumber,
 				startTime, stopTime);
 	}
+	
+	// 9
+	public void testGetTransactionsOccurredWithANumber() {
+		String accountNumber = "1234567890";
+		int n = 10;
+		BankAccount.getTheLastNTransactions(accountNumber, n);
+		verify(mockTransactionDAO, times(1)).getTheLastNTransactions(
+				accountNumber, n);
+	}
 
 }
