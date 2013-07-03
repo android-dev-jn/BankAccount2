@@ -155,7 +155,7 @@ public class BankAccountTest extends TestCase {
 		BankAccount.getTransactionsInPeriodOfTime(accountNumber, startTime, stopTime);
 		ArgumentCaptor<String> accountNubmerCaptor = ArgumentCaptor
 				.forClass(String.class);
-		verify(mockTransactionDAO, times(1)).getTransactions(accountNumber,
+		verify(mockTransactionDAO, times(1)).getTransactionsInPeriodOfTime(accountNumber,
 				startTime, stopTime);
 	}
 

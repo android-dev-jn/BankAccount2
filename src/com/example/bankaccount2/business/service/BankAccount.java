@@ -48,12 +48,21 @@ public class BankAccount {
 				.getAccount(accountNumber);
 		bankAccountDTO.setBalance(bankAccountDTO.getBalance() - amount);
 		bankAccountDAO.save(bankAccountDTO);
-		
+
 	}
 
-	public static ArrayList<TransactionDTO> getTransactionOccurred(String accountNumber) {
-		ArrayList<TransactionDTO> listTransactions = transactionDAO.getTransactionOccurred(accountNumber);
+	public static ArrayList<TransactionDTO> getTransactionOccurred(
+			String accountNumber) {
+		ArrayList<TransactionDTO> listTransactions = transactionDAO
+				.getTransactionOccurred(accountNumber);
 		return listTransactions;
+	}
+
+	public static void getTransactionsInPeriodOfTime(String accountNumber,
+			long startTime, long stopTime) {
+		transactionDAO.getTransactionsInPeriodOfTime(accountNumber, startTime,
+				stopTime);
+
 	}
 
 }

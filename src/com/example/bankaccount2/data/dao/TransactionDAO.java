@@ -15,4 +15,10 @@ public class TransactionDAO {
 		return new ArrayList<TransactionDTO>();
 	}
 
+	public void getTransactionsInPeriodOfTime(String accountNumber,
+			long startTime, long stopTime) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
