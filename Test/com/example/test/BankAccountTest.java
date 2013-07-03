@@ -112,5 +112,27 @@ public class BankAccountTest extends TestCase {
 		assertEquals(50, argument.getValue().getBalance(), DELTA);
 		assertEquals(accountNumber, argument.getValue().getAccountNumber());
 	}
+	
+	// 6
+	public void testTimeStampWithDraw() {
+		String accountNumber = "1234567890";
+		double amount = 100;
+		long timestamp = 1000;
+		String description = "deposit 100";
+
+		BankAccountDTO bankAccount = new BankAccountDTO(accountNumber, 150);
+		when(mockBankAccountDAO.getAccount(bankAccount.getAccountNumber()))
+				.thenReturn(bankAccount);
+		when(mockCalendar.getTimeInMillis()).thenReturn(timestamp);
+		TransactionDTO transactionDTO = new TransactionDTO(accountNumber,
+				timestamp, amount, description);
+
+		BankAccount.deposit(accountNumber, amount, description);
+		ArgumentCaptor<TransactionDTO> argumentCaptor = ArgumentCaptor
+				.forClass(TransactionDTO.class);
+
+		verify(mockTransactionDAO).createTransaction(argumentCaptor.capture());
+		assertEquals(timestamp, argumentCaptor.getValue().getTimestamp());
+	}
 
 }
