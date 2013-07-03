@@ -21,4 +21,9 @@ public class TransactionDAO {
 		
 	}
 
+	public void getTheLastNTransactions(String accountNumber, int n) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

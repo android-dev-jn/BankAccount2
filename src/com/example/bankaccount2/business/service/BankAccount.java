@@ -65,4 +65,8 @@ public class BankAccount {
 
 	}
 
+	public static void getTheLastNTransactions(String accountNumber, int n) {
+		transactionDAO.getTheLastNTransactions(accountNumber, n);
+	}
+
 }
