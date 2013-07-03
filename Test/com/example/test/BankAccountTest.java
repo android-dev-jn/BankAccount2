@@ -95,5 +95,22 @@ public class BankAccountTest extends TestCase {
 		verify(mockTransactionDAO).createTransaction(argumentCaptor.capture());
 		assertEquals(timestamp, argumentCaptor.getValue().getTimestamp());
 	}
+	
+	// 5
+	public void testWithdraw() {
+		double amount = 100, DELTA = 1e-2;
+		String description = "deposit 100";
+
+		BankAccountDTO bankAccountDTO = new BankAccountDTO(accountNumber, 150);
+		when(mockBankAccountDAO.getAccount(bankAccountDTO.getAccountNumber()))
+				.thenReturn(bankAccountDTO);
+		BankAccount.withdraw(accountNumber, amount, description);
+
+		ArgumentCaptor<BankAccountDTO> argument = ArgumentCaptor
+				.forClass(BankAccountDTO.class);
+		verify(mockBankAccountDAO, times(1)).save(argument.capture());
+		assertEquals(50, argument.getValue().getBalance(), DELTA);
+		assertEquals(accountNumber, argument.getValue().getAccountNumber());
+	}
 
 }
