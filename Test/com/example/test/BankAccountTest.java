@@ -1,5 +1,6 @@
 package com.example.test;
 
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -133,6 +134,17 @@ public class BankAccountTest extends TestCase {
 
 		verify(mockTransactionDAO).createTransaction(argumentCaptor.capture());
 		assertEquals(timestamp, argumentCaptor.getValue().getTimestamp());
+	}
+	
+	// 7
+	public void testGetTransactionsOccurred() {
+		String accountNumber = "1234567890";
+		ArgumentCaptor<String> accountNubmerCaptor = ArgumentCaptor
+				.forClass(String.class);
+		BankAccount.getTransactionOccurred(accountNumber);
+		verify(mockTransactionDAO, times(1)).getTransactionOccurred(
+				accountNubmerCaptor.capture());
+		assertEquals(accountNumber, accountNubmerCaptor.getValue());
 	}
 
 }
