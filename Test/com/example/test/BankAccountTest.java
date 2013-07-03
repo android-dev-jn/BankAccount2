@@ -1,6 +1,7 @@
 package com.example.test;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -166,6 +167,21 @@ public class BankAccountTest extends TestCase {
 		BankAccount.getTheLastNTransactions(accountNumber, n);
 		verify(mockTransactionDAO, times(1)).getTheLastNTransactions(
 				accountNumber, n);
+	}
+	
+	// 10
+	public void testOpenAccountHasTimeStamp() {
+		String accountNumber = "1234567890";		
+		Long timestamp = System.currentTimeMillis();
+
+		when(mockCalendar.getTimeInMillis()).thenReturn(timestamp);
+		BankAccount.openAccount(accountNumber);
+		ArgumentCaptor<BankAccountDTO> openAccount = ArgumentCaptor
+				.forClass(BankAccountDTO.class);
+
+		verify(mockBankAccountDAO, times(1)).save(openAccount.capture());
+		assertTrue(openAccount.getValue().getTimestamp() != null);
+		assertEquals(timestamp, openAccount.getValue().getTimestamp());
 	}
 
 }
