@@ -19,6 +19,7 @@ public class BankAccount {
 	public static BankAccountDTO openAccount(String string) {
 		BankAccountDTO bankAccountDTO = new BankAccountDTO();
 		bankAccountDTO.setAccountNumber(string);
+		bankAccountDTO.setTimestamp(calendar.getTimeInMillis());
 		bankAccountDAO.save(bankAccountDTO);
 		return null;
 	}

@@ -1,7 +1,6 @@
 package com.example.test;
 
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -13,6 +12,8 @@ import junit.framework.TestCase;
 
 import org.mockito.ArgumentCaptor;
 import org.mockito.MockitoAnnotations;
+
+import android.util.Log;
 
 import com.example.bankaccount2.business.service.BankAccount;
 import com.example.bankaccount2.data.dao.BankAccountDAO;
@@ -97,7 +98,7 @@ public class BankAccountTest extends TestCase {
 		verify(mockTransactionDAO).createTransaction(argumentCaptor.capture());
 		assertEquals(timestamp, argumentCaptor.getValue().getTimestamp());
 	}
-	
+
 	// 5
 	public void testWithdraw() {
 		double amount = 100, DELTA = 1e-2;
@@ -114,7 +115,7 @@ public class BankAccountTest extends TestCase {
 		assertEquals(50, argument.getValue().getBalance(), DELTA);
 		assertEquals(accountNumber, argument.getValue().getAccountNumber());
 	}
-	
+
 	// 6
 	public void testTimeStampWithDraw() {
 		String accountNumber = "1234567890";
@@ -136,7 +137,7 @@ public class BankAccountTest extends TestCase {
 		verify(mockTransactionDAO).createTransaction(argumentCaptor.capture());
 		assertEquals(timestamp, argumentCaptor.getValue().getTimestamp());
 	}
-	
+
 	// 7
 	public void testGetTransactionsOccurred() {
 		String accountNumber = "1234567890";
@@ -147,19 +148,20 @@ public class BankAccountTest extends TestCase {
 				accountNubmerCaptor.capture());
 		assertEquals(accountNumber, accountNubmerCaptor.getValue());
 	}
-	
+
 	// 8
 	public void testGestListTransactionsInPeriodOfTime() {
 		String accountNumber = "1234567890";
 		long startTime = 1000, stopTime = 2000;
 
-		BankAccount.getTransactionsInPeriodOfTime(accountNumber, startTime, stopTime);
+		BankAccount.getTransactionsInPeriodOfTime(accountNumber, startTime,
+				stopTime);
 		ArgumentCaptor<String> accountNubmerCaptor = ArgumentCaptor
 				.forClass(String.class);
-		verify(mockTransactionDAO, times(1)).getTransactionsInPeriodOfTime(accountNumber,
-				startTime, stopTime);
+		verify(mockTransactionDAO, times(1)).getTransactionsInPeriodOfTime(
+				accountNumber, startTime, stopTime);
 	}
-	
+
 	// 9
 	public void testGetTransactionsOccurredWithANumber() {
 		String accountNumber = "1234567890";
@@ -168,10 +170,10 @@ public class BankAccountTest extends TestCase {
 		verify(mockTransactionDAO, times(1)).getTheLastNTransactions(
 				accountNumber, n);
 	}
-	
+
 	// 10
 	public void testOpenAccountHasTimeStamp() {
-		String accountNumber = "1234567890";		
+		String accountNumber = "1234567890";
 		Long timestamp = System.currentTimeMillis();
 
 		when(mockCalendar.getTimeInMillis()).thenReturn(timestamp);
@@ -180,7 +182,8 @@ public class BankAccountTest extends TestCase {
 				.forClass(BankAccountDTO.class);
 
 		verify(mockBankAccountDAO, times(1)).save(openAccount.capture());
-		assertTrue(openAccount.getValue().getTimestamp() != null);
+		Log.e("value", openAccount.getValue().getTimestamp() + "");
+		assertTrue(openAccount.getValue() != null);
 		assertEquals(timestamp, openAccount.getValue().getTimestamp());
 	}
 

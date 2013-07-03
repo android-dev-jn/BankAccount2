@@ -4,6 +4,7 @@ public class BankAccountDTO {
 
 	private String accountNumber;
 	private double balance;
+	private Long timestamp;
 
 	public BankAccountDTO(String accountNumber2, double balance) {
 		this.accountNumber = accountNumber2;
@@ -29,4 +30,11 @@ public class BankAccountDTO {
 		return this.balance;
 	}
 
+	public Long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Long timestamp) {
+		this.timestamp = timestamp;
+	}
 }
